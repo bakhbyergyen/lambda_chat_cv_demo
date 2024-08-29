@@ -4,7 +4,7 @@ import streamlit as st # type: ignore
 import anthropic # type: ignore
 import os
 from claude_utils import anthropic_models, TOOLS, UI_LLM_PROMPT
-from utils import convert_to_pdf, save_cv_data
+from utils_linux import convert_to_pdf, save_cv_data
 
 
 def generate_cv(cv_data):
