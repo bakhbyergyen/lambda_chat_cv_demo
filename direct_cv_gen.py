@@ -116,7 +116,7 @@ def stream_claude_response(model_params, api_key):
     return response_message
 
 def main():
-    st.set_page_config(page_title="Direct CV Generator Demo", layout="wide")
+    st.set_page_config(page_title="Direct CV Generator Demo", layout="centered")
     st.title("Direct CV Generator Demo")
 
     # Sidebar for API key and model selection
