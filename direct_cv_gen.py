@@ -114,33 +114,20 @@ def stream_claude_response(model_params, api_key):
         }]
     })
     return response_message
+
 def main():
     st.set_page_config(page_title="Direct CV Generator Demo", layout="centered")
     st.title("Direct CV Generator Demo")
 
-    # Sidebar for API key, model selection, and prompt template
+    # Sidebar for API key and model selection
     with st.sidebar:
         api_key = st.text_input("Enter your Anthropic API Key:", type="password")
         model = st.selectbox("Select Claude model:", anthropic_models)
         temperature = st.slider("Temperature", min_value=0.0, max_value=1.0, value=0.3, step=0.1)
 
-        # Add a button to view the prompt template
-        if st.button("View Prompt Template"):
-            st.session_state.show_template = not st.session_state.get('show_template', False)
 
-        # Show/hide the prompt template and add edit functionality
-        if st.session_state.get('show_template', False):
-            st.subheader("Prompt Template")
-            edited_template = st.text_area("Edit Prompt Template", UI_LLM_PROMPT, height=300)
-            if st.button("Save Changes"):
-                # In a real application, you'd want to update this in a more permanent way
-                # For this example, we'll just update it in the session state
-                st.session_state.UI_LLM_PROMPT = edited_template
-                st.success("Prompt template updated!")
-
-    # Use the entered API key if provided, otherwise use the default
+     # Use the entered API key if provided, otherwise use the default
     anthropic_api_key = api_key or os.getenv("ANTHROPIC_API_KEY")
-
     # Initialize session state
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -172,9 +159,7 @@ def main():
             }
             response_placeholder = st.empty()
             full_response = ""
-            # Use the updated prompt template if it exists in the session state
-            current_prompt = st.session_state.get('UI_LLM_PROMPT', UI_LLM_PROMPT)
-            for response_chunk in stream_claude_response(model_params, anthropic_api_key, current_prompt):
+            for response_chunk in stream_claude_response(model_params, anthropic_api_key):
                 full_response += response_chunk
                 response_placeholder.markdown(full_response + "▌")
             response_placeholder.markdown(full_response)
