@@ -168,7 +168,7 @@ def main():
     if 'pdf_filename' in st.session_state:
         with open(st.session_state.pdf_filename, "rb") as file:
             st.download_button(
-                label="Download CV",
+                label="CV татах",
                 data=file,
                 file_name=st.session_state.pdf_filename,
                 mime="application/pdf"
